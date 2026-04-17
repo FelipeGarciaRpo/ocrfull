@@ -4,7 +4,9 @@ import logging
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'verify'))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VERIFY_DIR = os.path.join(BASE_DIR, 'verify')
+sys.path.insert(0, VERIFY_DIR)
 from pipeline import run_pipeline
 
 logger = logging.getLogger(__name__)
