@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+*.egg-info/
+.eggs/
+
+# Environment
+.env
+*.env
+
+# Debug files del pipeline
+debug_1_preprocessed.png
+debug_2_ocr_raw.txt
+debug_3_clean.txt
+
+# Images de prueba
+backend/verify/images/
+
+# Node
+node_modules/
+.next/
+frontend/.next/
+frontend/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

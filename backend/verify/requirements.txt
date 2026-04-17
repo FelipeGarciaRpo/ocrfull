@@ -1,0 +1,10 @@
+# Core
+pytesseract==0.3.10     # wrapper Python para Tesseract OCR
+Pillow==10.2.0          # manipulación de imágenes
+opencv-python==4.9.0.80 # computer vision (preprocesamiento)
+numpy==1.26.4           # arrays y operaciones numéricas
+pandas==2.2.1           # manipulación de datos tabulares
+scipy==1.12.0           # estadística (para análisis de calidad)
+ 
+# Dev / debug (opcional)
+ipython==8.22.2         # REPL mejorado para explorar resultados
