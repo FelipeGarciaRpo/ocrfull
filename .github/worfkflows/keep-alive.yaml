@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: Ping backend
         run: |
-          curl -f https://ocr-51iv.onrender.com/health || echo "Server waking up..."
+          curl -f https://ocrfull.onrender.com/health || echo "Server waking up..."
