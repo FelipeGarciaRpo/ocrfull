@@ -1,0 +1,29 @@
+name: Health check - DocuScan backend
+
+# Railway no duerme el servicio (a diferencia de Render free), asi que esto
+# no es un "keep alive": es un monitor. Si el backend se cae, el job falla
+# y GitHub manda un email — que es justo lo que falto la vez pasada.
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # cada 6 horas
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        env:
+          URL: https://docuscan-api-production.up.railway.app/health
+        run: |
+          echo "Consultando $URL"
+          code=$(curl -s -o body.json -w '%{http_code}' --max-time 30 "$URL" || echo "000")
+          echo "HTTP $code"
+          cat body.json 2>/dev/null || true
+          echo
+          if [ "$code" != "200" ]; then
+            echo "::error::El backend de DocuScan no responde (HTTP $code)"
+            exit 1
+          fi
+          echo "Backend OK"

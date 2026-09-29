@@ -6,9 +6,14 @@ from groq import Groq
 
 logger = logging.getLogger(__name__)
 
+# Debe ser un modelo multimodal de Groq (acepta image_url).
+# Configurable porque Groq retira modelos: si este desaparece, se cambia
+# la env var en vez de redesplegar codigo.
+VISION_MODEL = os.getenv("GROQ_VISION_MODEL", "qwen/qwen3.8-27b")
+
 def classify_with_vision(image_path: str) -> dict:
     """
-    Manda la imagen directamente a Llama 4 Scout (Vision).
+    Manda la imagen directamente al modelo multimodal.
     El modelo VE la imagen — no necesita OCR previo.
     """
     api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -49,7 +54,7 @@ Return ONLY the JSON. No explanation. No markdown."""
 
     try:
         response = client.chat.completions.create(
-            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            model=VISION_MODEL,
             max_tokens=1024,
             temperature=0.0,
             response_format={"type": "json_object"},

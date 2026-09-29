@@ -5,9 +5,13 @@ from groq import Groq
 
 logger = logging.getLogger(__name__)
 
+# Configurable por env var: Groq retira modelos cada tanto y cuando eso pasa
+# la API responde 404 model_not_found. Asi se cambia sin tocar codigo.
+TEXT_MODEL = os.getenv("GROQ_TEXT_MODEL", "openai/gpt-oss-120b")
+
 def classify_and_extract_with_claude(ocr_text: str, pipeline_fields: dict) -> dict:
     """
-    Sends the OCR text and pipeline fields to Llama 4 Scout via Groq
+    Sends the OCR text and pipeline fields to the Groq text model
     to get document classification and summary.
     """
     api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -39,7 +43,7 @@ Return ONLY the JSON. No explanation. No markdown."""
 
     try:
         response = client.chat.completions.create(
-            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            model=TEXT_MODEL,
             max_tokens=1024,
             temperature=0.0,
             response_format={"type": "json_object"},
